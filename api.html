@@ -24,5 +24,70 @@ Wemos D1 보드를 사용하는 이유가 되는 장치입니다.<br>
 sds011 센서로 측정한 미세먼지 p2.5와 p10 정보를 Thingspeak라는 서비스를 통해 저장합니다.<br>
 위 사이트는 IoT 전용 클라우드이며 학생 사용은 무료입니다.<br>
 <a href="https://thingspeak.com/" target="_blank">Thingspeak</a><br>
+해당 링크로 들어간 뒤 가입해줍니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuDIuo%2FbtrqNfqwSPQ%2Fxz8iHfhwMG94bYYctlkuU1%2Fimg.png">
+<br><br>로그인했다면 Channels 버튼을 눌러줍니다<br>
+※주의<br>
+해당 국가 기준으로 시간을 정하기 때문에 지역을 현재 머물고 있는 국가로 잘 설정해줍니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbz9FDV%2FbtrqNK4TI0i%2FzIvbJzYGkQkkavR7hcRJQK%2Fimg.png">
+<br><br>고등학생 시절 했던 프로젝트가 보입니다. New Channel을 눌러줍니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcTqWe%2FbtrqMaQ1HvQ%2FAQwyCht77SSAX3kCB9C6F0%2Fimg.png"><br>
+<br>위와같이 적어둔 뒤 하단의 Save Channel 버튼을 눌러줍니다.<br>
+Description 텍스트박스 우측의 아이콘은 개인적으로 사용하는 문법 교정 프로그램이기에 무시하셔도 됩니다.<br>
+sds011 센서는 p2.5 초미세먼지와 p10 미세먼지를 모두 측정할 수 있는 센서이기에 필드를 두개 생성해줍니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNEPy6%2FbtrqHTvTVF8%2Fn5dzNIF1vp7oI4UcrbfSK0%2Fimg.png"><br>
+<br>위와같이 나오면 됩니다. API Keys를 눌러줍니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FEuYe6%2FbtrqNfKQ5i8%2FgbjWnkOsvKX8k7y4elNFMK%2Fimg.png"><br>
+<br>
+api키는 남에게 공개되지 않도록 주의합시다.<br>
+여기까지 확인해두고 보드에 센서를 연결해서 값을 불러오는 것 먼저 확인하도록 합니다.<br>
+우선 sds011 센서를 사용하기 위한 라이브러리를 다운로드 합니다.<br>
+<a href="https://github.com/ricki-z/SDS011" target="_blank">라이브러리</a><br>
+위 깃허브 링크에서 다운로드 한 후 라이브러리 .zip라이브러리 추가 기능을 사용합니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNEEII%2FbtrqJ7OigCG%2FhUvXl8hpqnOGTKl1Gkblq0%2Fimg.png"><br>
+<br>
+다운로드한 라이브러리 zip파일을 선택해주면 됩니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FpBIWX%2FbtrqI6hsCup%2FgRVshzvDNx9Z9EL0JKvWrK%2Fimg.png"><br>
+<br>
+그러면 예제 목록에 SDS011 sensor Library가 포함된 것을 볼 수 있는데<br>
+SDS011_example을 열어줍니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIGQyN%2FbtrqMjAma9l%2F4884A0MT8cqaG4VmFxkUG1%2Fimg.png"><br>
+<br>예제 코드에서 핀 부분을 바꾸어주었습니다.<br>
+Wemos D1 보드를 사용할 때 유의할 점이 있는데<br>
+Uno 보드를 사용할 때와 다르게 디지털 핀을 앞면에 써있는 대로 연결해선 안됩니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcxAiyo%2FbtrqN34mY1M%2F8tk0Vut6HkCDMVrBcrakk1%2Fimg.png"><br>
+보드의 뒷면을 보면 GPIO 뒤에 숫자가 써있는데 그 핀을 참고해서 사용해야합니다.<br>
+위의 예시는 5,4번 핀으로 설정해두고 GPIO5와 GPIO4에 해당하는 핀에 TX,RX 순서로 연결했습니다.<br>
+예제 코드에 주석부분에 RX,TX 순서로 써있는데 TX,RX 순서로 연결했을때 정상 작동 했습니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fvvr3l%2FbtrqOgP5zxx%2FOCJZGpFZzxVdmVKsRZWxn0%2Fimg.png"><br>
+<br>sds011 센서 뒷면에 써있는 내용을 참고해 5V GND 연결후 TXD는 GPIO5번, RXD는 GPIO4번에 연결합니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F2ztvG%2FbtrqNzoXKnw%2FP2WKUCYCv3AART2tX8bhmk%2Fimg.png"><br>
+<br>위와같이 연결해줍니다.<br>
+전원공급이 되면 센서가 약간 진동하면서 소리를 내고 뒷면 붉은 LED가 깜빡거립니다.<br>
+이제 보드에 프로그램을 업로드 해준뒤 시리얼 모니터를 열어줍니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FyVw5m%2FbtrqNLJymkK%2FetYNg8c076lGhX8VmnBXC0%2Fimg.png"><br>
+<br>정상적으로 연결하고 업로드 했으면 위와같이 p10과 p2.5수치가 나옵니다.<br>
+옷이나 휴지로 센서 앞에서 먼지를 일으켜 값이 변화하는지 확인합니다.<br>
+센서가 정상 작동하는것을 확인했으면<br>
+보드를 인터넷에 연결하고 Thingspeak의 api에 연결해 업로드 하는 일만 남았습니다.<br>
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://wemos-1.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </body>
 </html>
