@@ -69,7 +69,72 @@ Uno 보드를 사용할 때와 다르게 디지털 핀을 앞면에 써있는 �
 <br>정상적으로 연결하고 업로드 했으면 위와같이 p10과 p2.5수치가 나옵니다.<br>
 옷이나 휴지로 센서 앞에서 먼지를 일으켜 값이 변화하는지 확인합니다.<br>
 센서가 정상 작동하는것을 확인했으면<br>
-보드를 인터넷에 연결하고 Thingspeak의 api에 연결해 업로드 하는 일만 남았습니다.<br>
+보드를 인터넷에 연결하고 Thingspeak의 api에 연결해 업로드 하는 일만 남았습니다.<br><p>
+
+    #include <SDS011.h><br>
+    #include <ESP8266WiFi.h> <br>
+    
+    String api =  "Write api key 칸에 있는 키를 입력해주세요" ; <br>
+    const  char * ssid =  "와이파이 이름" ; <br>
+    const  char * password =  "와이파이 비밀번호" ; <br>
+    const  char * server =  "api.thingspeak.com" ;<br>
+    WiFiClient client;<br>
+    <br>
+    float p10, p25;<br>
+    int error;<br>
+    SDS011 my_sds;<br>
+    <br>
+    void setup() {<br>
+        my_sds.begin(5, 4); <br>
+        Serial.begin(115200);<br>
+        <br>
+     WiFi.begin(ssid,password);<br>
+     <br>
+     while(WiFi.status() !=WL_CONNECTED)<br>
+     {<br>
+      delay(200);<br>
+      Serial.println("접속중");<br>
+     }<br>
+     Serial.println("접속완료");<br>
+    }<br>
+    <br>
+    void loop() {<br>
+        error = my_sds.read(&p25, &p10);<br>
+      if(client.connect(server,80)){<br>
+        String postStr = api;<br>
+        postStr +="&field1=";<br>
+        postStr +=String(p25);<br>
+        postStr +="&field2=";<br>
+        postStr +=String(p10);<br>
+        postStr +="\r\n\r\n";<br>
+        client.print("POST /update HTTP/1.1\n");<br>
+        client.print("Host: api.thingspeak.com\n");<br>
+        client.print("Connection: close\n");<br>
+        client.print("X-THINGSPEAKAPIKEY: "+api+"\n");<br>
+        client.print("Content-Type: application/x-www-form-urlencoded\n");<br>
+        client.print("Content-Length: ");<br>
+        client.print(postStr.length());<br>
+        client.print("\n\n");<br>
+        client.print(postStr);<br>
+        }<br>
+      if(!error)<br>
+      {<br>
+        Serial.println("P2.5: " + String (p25));<br>
+        Serial.println("P10: " + String (p10));<br>
+      }<br>
+        delay(100);<br>
+    }<br>
+    <p>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbBAPcz%2FbtrqLYXMoaF%2F5vtAAEq9JJRAQHhSyaYkwk%2Fimg.png"><br>
+    해당 코드를 업로드 한뒤 Thingspeak 차트를 살펴봅니다.<br>
+센서를 연결하기 전 0으로 인식되다가 정상적으로 측정을 하고 앞에서 휴지를 흔들었을때<br>
+최고점을 찍고 정상화 되어가는 모습을 확인합니다.<br>
+loop문 하단에 시리얼 출력 코드도 넣어 주었기에<br>
+시리얼 모니터에도 동일한 값이 출력되는 것을 확인할 수 있습니다.<br><p>
+
+이제 Wemos D1 보드를 사용해 센서값을 읽고 그 값을 인터넷 상에 업로드 하여 확인할 수 있게 되었습니다.<br>
+이에 연동하여 환기 시스템을 제작하는 등의 응용을 시도해보기 바랍니다.<br>
+
 <div id="disqus_thread"></div>
 <script>
     /**
