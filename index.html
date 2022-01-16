@@ -3,77 +3,105 @@
     <head>
         <title>Wemos D1 사용법</title>
         <meta charset="utf-8">
+        <style>
+            body{
+                margin:0;
+            }
+            a{
+                color:blue;
+            }
+            h1{
+                font-size:xx-large;
+                text-align:center;
+                border-bottom:2px black solid;
+                margin:0;
+                padding:10px;
+            }
+            ul
+            {
+                margin:0;
+                border-right: double black 2px;
+                width:230px;
+              
+            }
+            .active
+            {
+                color:black;
+            }
+            #grid
+            {
+                display:grid;
+                grid-template-columns: 290px 1fr;
+                padding-top:0;
+            }
+            
+        </style>
     </head>
 
 <body>
 <h1>Wemos D1 아두이노 와이파이 보드 사용법</h1>
-by-present0917
-<br><p>
-<ul>
-    <li><a href="index.html">Wemos D1 작동테스트</a></li> 
-    <li><a href="api.html">ThingSpeak api 사용 IoT 구현</a></li> 
-    <li><a href="led.html">html 웹서버 구현 LED 동작</a></li> 
-    
-</ul>
-</p>
+<div id="grid">
+    <ul>
+        <div style="color:green">by-present0917</div>
+        <li><a href="index.html" class="active">Wemos D1 작동테스트</a></li> 
+        <li><a href="api.html">ThingSpeak api 사용 IoT 구현</a></li> 
+        <li><a href="led.html">html 웹서버 구현 LED 동작</a></li> 
+        
+        </ul>
+       
+        <div>
+        Wemos D1 와이파이 보드는 Ch340 UART 드라이버를 사용합니다.<br>
 
-<p>
-Wemos D1 와이파이 보드는 Ch340 UART 드라이버를 사용합니다.<br>
+        <a href="http://www.wch.cn/download/CH341SER_ZIP.html" target="_blank">CH341SER 드라이버 다운로드</a><br>
+        해당링크에서 드라이버를 다운로드 후 usb를 연결하시면<br>
+        장치관리자에 인식 되는 것을 확인할 수 있습니다.<br>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbLa7IA%2FbtrqAVHmWUq%2FYlCzPOcYdRlED3yddpSklk%2Fimg.png">
 
-<a href="http://www.wch.cn/download/CH341SER_ZIP.html" target="_blank">CH341SER 드라이버 다운로드</a><br>
-해당링크에서 드라이버를 다운로드 후 usb를 연결하시면<br>
-장치관리자에 인식 되는 것을 확인할 수 있습니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbLa7IA%2FbtrqAVHmWUq%2FYlCzPOcYdRlED3yddpSklk%2Fimg.png">
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbBJEoQ%2FbtrqGcuv0ES%2FYEupoa7MtRaekCjQ2qngKK%2Fimg.png"><br>
+        </p>
+        <p>
+        인식을 확인했다면 아두이노 IDE를 실행 한 뒤
+        파일 -> 환경설정으로 들어갑니다.<br>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbDcaK9%2FbtrqBGb6L8R%2FpNymkBS1XZ8buryUw2BYBk%2Fimg.png"><br>
+        </p>
+        아래쪽 추가적인 보드 매니저 URLs가 비어있을텐데 그 자리에
 
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbBJEoQ%2FbtrqGcuv0ES%2FYEupoa7MtRaekCjQ2qngKK%2Fimg.png"><br>
-</p>
-<p>
-인식을 확인했다면 아두이노 IDE를 실행 한 뒤
-파일 -> 환경설정으로 들어갑니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbDcaK9%2FbtrqBGb6L8R%2FpNymkBS1XZ8buryUw2BYBk%2Fimg.png"><br>
-</p>
-아래쪽 추가적인 보드 매니저 URLs가 비어있을텐데 그 자리에
+        https://arduino.esp8266.com/stable/package_esp8266com_index.json<br>
 
-https://arduino.esp8266.com/stable/package_esp8266com_index.json<br>
+        해당 링크를 붙여넣기합니다.<br>
+        <p>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FblcYEJ%2FbtrqFjgm1Jt%2Fv6k8CKP1D1iTvvk8AdxV70%2Fimg.png"><br>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FtaLpR%2FbtrqGbJaZNL%2F2HU7ORBbw8tw9kO10UGq60%2Fimg.png"><br>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbP9Znj%2FbtrqBHviEfL%2F16D8HgJdqSBvJKRfD7dVMK%2Fimg.png"><br>
+        이미지가 첨부된 순서대로 ESP8266 Community 버전을 다운로드합니다.<br>
 
-해당 링크를 붙여넣기합니다.<br>
-<p>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FblcYEJ%2FbtrqFjgm1Jt%2Fv6k8CKP1D1iTvvk8AdxV70%2Fimg.png"><br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FtaLpR%2FbtrqGbJaZNL%2F2HU7ORBbw8tw9kO10UGq60%2Fimg.png"><br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbP9Znj%2FbtrqBHviEfL%2F16D8HgJdqSBvJKRfD7dVMK%2Fimg.png"><br>
-이미지가 첨부된 순서대로 ESP8266 Community 버전을 다운로드합니다.<br>
+        그후 아두이노 IDE를 종료후 재실행합니다.</p> 
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb4GhHB%2FbtrqFkl6ipA%2FNVdXAuTLkF9mJw1firRTxk%2Fimg.png"><br>
+        <br>그후 툴 -> 보드를 확인하면 다음과 같이 추가 돼 있습니다. D1 R2 & mini를 선택합니다.<br>
 
-그후 아두이노 IDE를 종료후 재실행합니다.</p> 
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb4GhHB%2FbtrqFkl6ipA%2FNVdXAuTLkF9mJw1firRTxk%2Fimg.png"><br>
-<br>그후 툴 -> 보드를 확인하면 다음과 같이 추가 돼 있습니다. D1 R2 & mini를 선택합니다.<br>
+        Upload Speed는 에러시 57600 으로 바꿔서 시도합니다.<p>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fly7vz%2FbtrqHFbFlft%2FyjgOmdITOMGvPviX9mehq1%2Fimg.png"><br>
+        <p>테스트용으로 시리얼 출력 코드를 업로드해봅니다.<br></p>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F4iysV%2FbtrqGcnLE2p%2FkDFkmWa0c4h53vY8ceMTPk%2Fimg.png"><br>
+        <p>
+        정상 출력되는 모습을 확인합니다.
 
-Upload Speed는 에러시 57600 으로 바꿔서 시도합니다.<p>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fly7vz%2FbtrqHFbFlft%2FyjgOmdITOMGvPviX9mehq1%2Fimg.png"><br>
-<p>테스트용으로 시리얼 출력 코드를 업로드해봅니다.<br></p>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F4iysV%2FbtrqGcnLE2p%2FkDFkmWa0c4h53vY8ceMTPk%2Fimg.png"><br>
-<p>
-정상 출력되는 모습을 확인합니다.
+        텍스트가 출력되지 않을시 우 하단 보드레이트 설정에서 115200 보드레이트가 맞는지 확인합니다.<p>
+        이제 정상적으로 업로드가 되는지와 시리얼통신까지 확인했습니다. 주 기능인 와이파이 접속이 가능한지 확인합니다.<br>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcdlu3W%2FbtrqNM22mtb%2FLfLELisg5WCL6k6POkJhq0%2Fimg.png"><br>
+        예제의 ESP8266WebServer -> HelloServer를 열고<br>
+        #define STASSID에 와이파이 이름<br>
+        #define STAPSK에 와이파이 비밀번호를 입력합니다.<br>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgqRPB%2FbtrqNfYGJNB%2Fo3WkrqrHbz756wglq7aJMK%2Fimg.png"><br>
+        업로드 완료후 iptime 공유기에 연결됐다는 내용과 IP주소를 안내해주는 것을 시리얼 모니터에서 확인할 수 있습니다.<br>
+        이제 PC와 연결하는것과 와이파이에 접속할 수 있는것을 모두 확인했습니다.<br>
+        <div>
+</div>
 
-텍스트가 출력되지 않을시 우 하단 보드레이트 설정에서 115200 보드레이트가 맞는지 확인합니다.<p>
-이제 정상적으로 업로드가 되는지와 시리얼통신까지 확인했습니다. 주 기능인 와이파이 접속이 가능한지 확인합니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fcdlu3W%2FbtrqNM22mtb%2FLfLELisg5WCL6k6POkJhq0%2Fimg.png"><br>
-예제의 ESP8266WebServer -> HelloServer를 열고<br>
-#define STASSID에 와이파이 이름<br>
-#define STAPSK에 와이파이 비밀번호를 입력합니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbgqRPB%2FbtrqNfYGJNB%2Fo3WkrqrHbz756wglq7aJMK%2Fimg.png"><br>
-업로드 완료후 iptime 공유기에 연결됐다는 내용과 IP주소를 안내해주는 것을 시리얼 모니터에서 확인할 수 있습니다.<br>
-이제 PC와 연결하는것과 와이파이에 접속할 수 있는것을 모두 확인했습니다.<br>
+
 <div id="disqus_thread"></div>
 <script>
-    /**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-    /*
-    var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
+  
     (function() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
     s.src = 'https://wemos-1.disqus.com/embed.js';
