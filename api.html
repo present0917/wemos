@@ -3,149 +3,174 @@
     <head>
         <title>API 사용</title>
         <meta charset="utf-8">
+        <style>
+            body{
+                margin:0;
+            }
+            a{
+                color:blue;
+            }
+            h1{
+                font-size:xx-large;
+                text-align:center;
+                border-bottom:2px black solid;
+                margin:0;
+                padding:10px;
+            }
+            ul
+            {
+                margin:0;
+                border-right: double black 2px;
+                width:230px;
+              
+            }
+            .active
+            {
+                color:black;
+            }
+            #grid
+            {
+                display:grid;
+                grid-template-columns: 290px 1fr;
+                padding-top:0;
+            }
+        </style>
     </head>
 
 <body>
 <h1>Wemos D1 아두이노 와이파이 보드 사용법</h1>
-by-present0917
-<br><p>
+
+<div id="grid">
 <ul>
+    <div style="color:green">by-present0917</div>
     <li><a href="index.html">Wemos D1 작동테스트</a></li> 
-    <li><a href="api.html">ThingSpeak api 사용 IoT 구현</a></li> 
+    <li><a href="api.html" class="active">ThingSpeak api 사용 IoT 구현</a></li>  
     <li><a href="led.html">html 웹서버 구현 LED 동작</a></li> 
-    
 </ul>
-</p>
-
-<p>
-Wemos D1 보드를 사용하는 이유가 되는 장치입니다.<br>
-아두이노 우노 보드에 esp8266을 장착시킨듯한 보드이기 때문에<br>
-간단하게 센서로 측정한 결과를 와이파이 통신을 통해 저장할 수 있습니다.<br>
-sds011 센서로 측정한 미세먼지 p2.5와 p10 정보를 Thingspeak라는 서비스를 통해 저장합니다.<br>
-위 사이트는 IoT 전용 클라우드이며 학생 사용은 무료입니다.<br>
-<a href="https://thingspeak.com/" target="_blank">Thingspeak</a><br>
-해당 링크로 들어간 뒤 가입해줍니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuDIuo%2FbtrqNfqwSPQ%2Fxz8iHfhwMG94bYYctlkuU1%2Fimg.png">
-<br><br>로그인했다면 Channels 버튼을 눌러줍니다<br>
-※주의<br>
-해당 국가 기준으로 시간을 정하기 때문에 지역을 현재 머물고 있는 국가로 잘 설정해줍니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbz9FDV%2FbtrqNK4TI0i%2FzIvbJzYGkQkkavR7hcRJQK%2Fimg.png">
-<br><br>고등학생 시절 했던 프로젝트가 보입니다. New Channel을 눌러줍니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcTqWe%2FbtrqMaQ1HvQ%2FAQwyCht77SSAX3kCB9C6F0%2Fimg.png"><br>
-<br>위와같이 적어둔 뒤 하단의 Save Channel 버튼을 눌러줍니다.<br>
-Description 텍스트박스 우측의 아이콘은 개인적으로 사용하는 문법 교정 프로그램이기에 무시하셔도 됩니다.<br>
-sds011 센서는 p2.5 초미세먼지와 p10 미세먼지를 모두 측정할 수 있는 센서이기에 필드를 두개 생성해줍니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNEPy6%2FbtrqHTvTVF8%2Fn5dzNIF1vp7oI4UcrbfSK0%2Fimg.png"><br>
-<br>위와같이 나오면 됩니다. API Keys를 눌러줍니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FEuYe6%2FbtrqNfKQ5i8%2FgbjWnkOsvKX8k7y4elNFMK%2Fimg.png"><br>
-<br>
-api키는 남에게 공개되지 않도록 주의합시다.<br>
-여기까지 확인해두고 보드에 센서를 연결해서 값을 불러오는 것 먼저 확인하도록 합니다.<br>
-우선 sds011 센서를 사용하기 위한 라이브러리를 다운로드 합니다.<br>
-<a href="https://github.com/ricki-z/SDS011" target="_blank">라이브러리</a><br>
-위 깃허브 링크에서 다운로드 한 후 라이브러리 .zip라이브러리 추가 기능을 사용합니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNEEII%2FbtrqJ7OigCG%2FhUvXl8hpqnOGTKl1Gkblq0%2Fimg.png"><br>
-<br>
-다운로드한 라이브러리 zip파일을 선택해주면 됩니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FpBIWX%2FbtrqI6hsCup%2FgRVshzvDNx9Z9EL0JKvWrK%2Fimg.png"><br>
-<br>
-그러면 예제 목록에 SDS011 sensor Library가 포함된 것을 볼 수 있는데<br>
-SDS011_example을 열어줍니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIGQyN%2FbtrqMjAma9l%2F4884A0MT8cqaG4VmFxkUG1%2Fimg.png"><br>
-<br>예제 코드에서 핀 부분을 바꾸어주었습니다.<br>
-Wemos D1 보드를 사용할 때 유의할 점이 있는데<br>
-Uno 보드를 사용할 때와 다르게 디지털 핀을 앞면에 써있는 대로 연결해선 안됩니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcxAiyo%2FbtrqN34mY1M%2F8tk0Vut6HkCDMVrBcrakk1%2Fimg.png"><br>
-보드의 뒷면을 보면 GPIO 뒤에 숫자가 써있는데 그 핀을 참고해서 사용해야합니다.<br>
-위의 예시는 5,4번 핀으로 설정해두고 GPIO5와 GPIO4에 해당하는 핀에 TX,RX 순서로 연결했습니다.<br>
-예제 코드에 주석부분에 RX,TX 순서로 써있는데 TX,RX 순서로 연결했을때 정상 작동 했습니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fvvr3l%2FbtrqOgP5zxx%2FOCJZGpFZzxVdmVKsRZWxn0%2Fimg.png"><br>
-<br>sds011 센서 뒷면에 써있는 내용을 참고해 5V GND 연결후 TXD는 GPIO5번, RXD는 GPIO4번에 연결합니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F2ztvG%2FbtrqNzoXKnw%2FP2WKUCYCv3AART2tX8bhmk%2Fimg.png"><br>
-<br>위와같이 연결해줍니다.<br>
-전원공급이 되면 센서가 약간 진동하면서 소리를 내고 뒷면 붉은 LED가 깜빡거립니다.<br>
-이제 보드에 프로그램을 업로드 해준뒤 시리얼 모니터를 열어줍니다.<br>
-<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FyVw5m%2FbtrqNLJymkK%2FetYNg8c076lGhX8VmnBXC0%2Fimg.png"><br>
-<br>정상적으로 연결하고 업로드 했으면 위와같이 p10과 p2.5수치가 나옵니다.<br>
-옷이나 휴지로 센서 앞에서 먼지를 일으켜 값이 변화하는지 확인합니다.<br>
-센서가 정상 작동하는것을 확인했으면<br>
-보드를 인터넷에 연결하고 Thingspeak의 api에 연결해 업로드 하는 일만 남았습니다.<br><p>
-
-    #include <SDS011.h><br>
-    #include <ESP8266WiFi.h> <br>
-    
-    String api =  "Write api key 칸에 있는 키를 입력해주세요" ; <br>
-    const  char * ssid =  "와이파이 이름" ; <br>
-    const  char * password =  "와이파이 비밀번호" ; <br>
-    const  char * server =  "api.thingspeak.com" ;<br>
-    WiFiClient client;<br>
+    <div>
+    Wemos D1 보드를 사용하는 이유가 되는 장치입니다.<br>
+    아두이노 우노 보드에 esp8266을 장착시킨듯한 보드이기 때문에<br>
+    간단하게 센서로 측정한 결과를 와이파이 통신을 통해 저장할 수 있습니다.<br>
+    sds011 센서로 측정한 미세먼지 p2.5와 p10 정보를 Thingspeak라는 서비스를 통해 저장합니다.<br>
+    위 사이트는 IoT 전용 클라우드이며 학생 사용은 무료입니다.<br>
+    <a href="https://thingspeak.com/" target="_blank">Thingspeak</a><br>
+    해당 링크로 들어간 뒤 가입해줍니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FuDIuo%2FbtrqNfqwSPQ%2Fxz8iHfhwMG94bYYctlkuU1%2Fimg.png">
+    <br><br>로그인했다면 Channels 버튼을 눌러줍니다<br>
+    ※주의<br>
+    해당 국가 기준으로 시간을 정하기 때문에 지역을 현재 머물고 있는 국가로 잘 설정해줍니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fbz9FDV%2FbtrqNK4TI0i%2FzIvbJzYGkQkkavR7hcRJQK%2Fimg.png">
+    <br><br>고등학생 시절 했던 프로젝트가 보입니다. New Channel을 눌러줍니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbcTqWe%2FbtrqMaQ1HvQ%2FAQwyCht77SSAX3kCB9C6F0%2Fimg.png"><br>
+    <br>위와같이 적어둔 뒤 하단의 Save Channel 버튼을 눌러줍니다.<br>
+    Description 텍스트박스 우측의 아이콘은 개인적으로 사용하는 문법 교정 프로그램이기에 무시하셔도 됩니다.<br>
+    sds011 센서는 p2.5 초미세먼지와 p10 미세먼지를 모두 측정할 수 있는 센서이기에 필드를 두개 생성해줍니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNEPy6%2FbtrqHTvTVF8%2Fn5dzNIF1vp7oI4UcrbfSK0%2Fimg.png"><br>
+    <br>위와같이 나오면 됩니다. API Keys를 눌러줍니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FEuYe6%2FbtrqNfKQ5i8%2FgbjWnkOsvKX8k7y4elNFMK%2Fimg.png"><br>
     <br>
-    float p10, p25;<br>
-    int error;<br>
-    SDS011 my_sds;<br>
+    api키는 남에게 공개되지 않도록 주의합시다.<br>
+    여기까지 확인해두고 보드에 센서를 연결해서 값을 불러오는 것 먼저 확인하도록 합니다.<br>
+    우선 sds011 센서를 사용하기 위한 라이브러리를 다운로드 합니다.<br>
+    <a href="https://github.com/ricki-z/SDS011" target="_blank">라이브러리</a><br>
+    위 깃허브 링크에서 다운로드 한 후 라이브러리 .zip라이브러리 추가 기능을 사용합니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FNEEII%2FbtrqJ7OigCG%2FhUvXl8hpqnOGTKl1Gkblq0%2Fimg.png"><br>
     <br>
-    void setup() {<br>
-        my_sds.begin(5, 4); <br>
-        Serial.begin(115200);<br>
+    다운로드한 라이브러리 zip파일을 선택해주면 됩니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FpBIWX%2FbtrqI6hsCup%2FgRVshzvDNx9Z9EL0JKvWrK%2Fimg.png"><br>
+    <br>
+    그러면 예제 목록에 SDS011 sensor Library가 포함된 것을 볼 수 있는데<br>
+    SDS011_example을 열어줍니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FIGQyN%2FbtrqMjAma9l%2F4884A0MT8cqaG4VmFxkUG1%2Fimg.png"><br>
+    <br>예제 코드에서 핀 부분을 바꾸어주었습니다.<br>
+    Wemos D1 보드를 사용할 때 유의할 점이 있는데<br>
+    Uno 보드를 사용할 때와 다르게 디지털 핀을 앞면에 써있는 대로 연결해선 안됩니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcxAiyo%2FbtrqN34mY1M%2F8tk0Vut6HkCDMVrBcrakk1%2Fimg.png"><br>
+    보드의 뒷면을 보면 GPIO 뒤에 숫자가 써있는데 그 핀을 참고해서 사용해야합니다.<br>
+    위의 예시는 5,4번 핀으로 설정해두고 GPIO5와 GPIO4에 해당하는 핀에 TX,RX 순서로 연결했습니다.<br>
+    예제 코드에 주석부분에 RX,TX 순서로 써있는데 TX,RX 순서로 연결했을때 정상 작동 했습니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fvvr3l%2FbtrqOgP5zxx%2FOCJZGpFZzxVdmVKsRZWxn0%2Fimg.png"><br>
+    <br>sds011 센서 뒷면에 써있는 내용을 참고해 5V GND 연결후 TXD는 GPIO5번, RXD는 GPIO4번에 연결합니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F2ztvG%2FbtrqNzoXKnw%2FP2WKUCYCv3AART2tX8bhmk%2Fimg.png"><br>
+    <br>위와같이 연결해줍니다.<br>
+    전원공급이 되면 센서가 약간 진동하면서 소리를 내고 뒷면 붉은 LED가 깜빡거립니다.<br>
+    이제 보드에 프로그램을 업로드 해준뒤 시리얼 모니터를 열어줍니다.<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FyVw5m%2FbtrqNLJymkK%2FetYNg8c076lGhX8VmnBXC0%2Fimg.png"><br>
+    <br>정상적으로 연결하고 업로드 했으면 위와같이 p10과 p2.5수치가 나옵니다.<br>
+    옷이나 휴지로 센서 앞에서 먼지를 일으켜 값이 변화하는지 확인합니다.<br>
+    센서가 정상 작동하는것을 확인했으면<br>
+    보드를 인터넷에 연결하고 Thingspeak의 api에 연결해 업로드 하는 일만 남았습니다.<br><p>
+
+        #include <SDS011.h><br>
+        #include <ESP8266WiFi.h> <br>
+        
+        String api =  "Write api key 칸에 있는 키를 입력해주세요" ; <br>
+        const  char * ssid =  "와이파이 이름" ; <br>
+        const  char * password =  "와이파이 비밀번호" ; <br>
+        const  char * server =  "api.thingspeak.com" ;<br>
+        WiFiClient client;<br>
         <br>
-     WiFi.begin(ssid,password);<br>
-     <br>
-     while(WiFi.status() !=WL_CONNECTED)<br>
-     {<br>
-      delay(200);<br>
-      Serial.println("접속중");<br>
-     }<br>
-     Serial.println("접속완료");<br>
-    }<br>
-    <br>
-    void loop() {<br>
-        error = my_sds.read(&p25, &p10);<br>
-      if(client.connect(server,80)){<br>
-        String postStr = api;<br>
-        postStr +="&field1=";<br>
-        postStr +=String(p25);<br>
-        postStr +="&field2=";<br>
-        postStr +=String(p10);<br>
-        postStr +="\r\n\r\n";<br>
-        client.print("POST /update HTTP/1.1\n");<br>
-        client.print("Host: api.thingspeak.com\n");<br>
-        client.print("Connection: close\n");<br>
-        client.print("X-THINGSPEAKAPIKEY: "+api+"\n");<br>
-        client.print("Content-Type: application/x-www-form-urlencoded\n");<br>
-        client.print("Content-Length: ");<br>
-        client.print(postStr.length());<br>
-        client.print("\n\n");<br>
-        client.print(postStr);<br>
+        float p10, p25;<br>
+        int error;<br>
+        SDS011 my_sds;<br>
+        <br>
+        void setup() {<br>
+            my_sds.begin(5, 4); <br>
+            Serial.begin(115200);<br>
+            <br>
+        WiFi.begin(ssid,password);<br>
+        <br>
+        while(WiFi.status() !=WL_CONNECTED)<br>
+        {<br>
+        delay(200);<br>
+        Serial.println("접속중");<br>
         }<br>
-      if(!error)<br>
-      {<br>
-        Serial.println("P2.5: " + String (p25));<br>
-        Serial.println("P10: " + String (p10));<br>
-      }<br>
-        delay(100);<br>
-    }<br>
-    <p>
-    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbBAPcz%2FbtrqLYXMoaF%2F5vtAAEq9JJRAQHhSyaYkwk%2Fimg.png"><br>
-    해당 코드를 업로드 한뒤 Thingspeak 차트를 살펴봅니다.<br>
-센서를 연결하기 전 0으로 인식되다가 정상적으로 측정을 하고 앞에서 휴지를 흔들었을때<br>
-최고점을 찍고 정상화 되어가는 모습을 확인합니다.<br>
-loop문 하단에 시리얼 출력 코드도 넣어 주었기에<br>
-시리얼 모니터에도 동일한 값이 출력되는 것을 확인할 수 있습니다.<br><p>
+        Serial.println("접속완료");<br>
+        }<br>
+        <br>
+        void loop() {<br>
+            error = my_sds.read(&p25, &p10);<br>
+        if(client.connect(server,80)){<br>
+            String postStr = api;<br>
+            postStr +="&field1=";<br>
+            postStr +=String(p25);<br>
+            postStr +="&field2=";<br>
+            postStr +=String(p10);<br>
+            postStr +="\r\n\r\n";<br>
+            client.print("POST /update HTTP/1.1\n");<br>
+            client.print("Host: api.thingspeak.com\n");<br>
+            client.print("Connection: close\n");<br>
+            client.print("X-THINGSPEAKAPIKEY: "+api+"\n");<br>
+            client.print("Content-Type: application/x-www-form-urlencoded\n");<br>
+            client.print("Content-Length: ");<br>
+            client.print(postStr.length());<br>
+            client.print("\n\n");<br>
+            client.print(postStr);<br>
+            }<br>
+        if(!error)<br>
+        {<br>
+            Serial.println("P2.5: " + String (p25));<br>
+            Serial.println("P10: " + String (p10));<br>
+        }<br>
+            delay(100);<br>
+        }<br>
+        <p>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbBAPcz%2FbtrqLYXMoaF%2F5vtAAEq9JJRAQHhSyaYkwk%2Fimg.png"><br>
+        해당 코드를 업로드 한뒤 Thingspeak 차트를 살펴봅니다.<br>
+    센서를 연결하기 전 0으로 인식되다가 정상적으로 측정을 하고 앞에서 휴지를 흔들었을때<br>
+    최고점을 찍고 정상화 되어가는 모습을 확인합니다.<br>
+    loop문 하단에 시리얼 출력 코드도 넣어 주었기에<br>
+    시리얼 모니터에도 동일한 값이 출력되는 것을 확인할 수 있습니다.<br><p>
 
-이제 Wemos D1 보드를 사용해 센서값을 읽고 그 값을 인터넷 상에 업로드 하여 확인할 수 있게 되었습니다.<br>
-이에 연동하여 환기 시스템을 제작하는 등의 응용을 시도해보기 바랍니다.<br>
+    이제 Wemos D1 보드를 사용해 센서값을 읽고 그 값을 인터넷 상에 업로드 하여 확인할 수 있게 되었습니다.<br>
+    이에 연동하여 환기 시스템을 제작하는 등의 응용을 시도해보기 바랍니다.<br>
+
+    </div>
+</div>
 
 <div id="disqus_thread"></div>
 <script>
-    /**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-    /*
-    var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
+    
     (function() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
     s.src = 'https://wemos-1.disqus.com/embed.js';
