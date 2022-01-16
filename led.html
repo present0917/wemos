@@ -3,32 +3,58 @@
     <head>
         <title>LED</title>
         <meta charset="utf-8">
+        <style>
+            body{
+                margin:0;
+            }
+            a{
+                color:blue;
+            }
+            h1{
+                font-size:xx-large;
+                text-align:center;
+                border-bottom:2px black solid;
+                margin:0;
+                padding:10px;
+            }
+            ul
+            {
+                margin:0;
+                border-right: double black 2px;
+                width:230px;
+              
+            }
+            .active
+            {
+                color:black;
+            }
+            #grid
+            {
+                display:grid;
+                grid-template-columns: 290px 1fr;
+                padding-top:0;
+            }
+            
+        </style>
+
     </head>
 
 <body>
     <h1>Wemos D1 아두이노 와이파이 보드 사용법</h1>
-    by-present0917
-    <br><p>
+<div id="grid">
     <ul>
+        <div style="color:green">by-present0917</div>
         <li><a href="index.html">Wemos D1 작동테스트</a></li> 
         <li><a href="api.html">ThingSpeak api 사용 IoT 구현</a></li> 
-        <li><a href="led.html">html 웹서버 구현 LED 동작</a></li> 
-        
+        <li><a href="led.html" class="active">html 웹서버 구현 LED 동작</a></li> 
     </ul>
-    </p>
-    
-    <p>
+    <div>
+    aaa
+    </div>
+</div>
+
         <div id="disqus_thread"></div>
 <script>
-    /**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-    /*
-    var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
     (function() { // DON'T EDIT BELOW THIS LINE
     var d = document, s = d.createElement('script');
     s.src = 'https://wemos-1.disqus.com/embed.js';
