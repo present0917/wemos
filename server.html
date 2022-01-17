@@ -75,6 +75,63 @@ Refresh: 20<br>
 매 20초마다 새로고침합니다.<br><p></p>
 여기까지 Status line과 header를 구성했으므로 뒤에 빈줄을 삽입함으로 구분합니다.<br>
 이제부터 Body를 작성하면 되고 이부분은 평소 HTML로 웹사이트를 만들던것과 같이 작성하면 됩니다.<br>
+<p>
+
+    #include <ESP8266WiFi.h><br>
+ <br>
+        const char* ssid     = "와이파이이름"; <br>
+        const char* password = "와이파이비밀번호";<br>
+        <br>
+        WiFiServer server(80);  //http의 기본 포트는 80입니다.<br>
+        <br>
+        void setup() {<br>
+          Serial.begin(115200); // 시리얼 통신 속도는 115200<br>
+          delay(1000);<br>
+          Serial.println();<br>
+          <br>
+          WiFi.mode(WIFI_STA); <br>
+          /*<br>
+          와이파이의 모드 (STA는 station(라우터) 어댑터를 무선 네트워크에연결<br>
+          AP모드는 acces point, 어댑터와 내부적으로 연결할 때 쓰임) 이번 구현은 STA가 적합합니다)<br>
+          */<br>
+          Serial.println();<br>
+          Serial.print(ssid);<br>
+          Serial.println("에 접속중");<br>
+          <br>
+          WiFi.begin(ssid, password);  //아까 입력한 와이파이 정보로 접속<br>
+          <br>
+          while (WiFi.status() != WL_CONNECTED) { //와이파이가 연결안되면 .을 0.1초간격으로 찍어 로딩처럼 표시<br>
+            delay(100);<br>
+            Serial.print(".");<br>
+          }<br>
+          <br>
+          Serial.println("");<br>
+          Serial.println("연결되었습니다.");<br>
+          <br>
+          server.begin(); //연결되었다고 시리얼로 표시후 서버를 켭니다.<br>
+          Serial.println(WiFi.localIP());<br>
+        }<br>
+        <br>
+        void loop() {<br>
+          WiFiClient client = server.available();<br>
+          client.println("HTTP/1.1 200 OK");<br>
+          client.println("Content-Type: text/html");<br>
+          client.println("Connection: close");<br>
+          client.println("Refresh: 20"); <br>
+          client.println();<br>
+          client.println("<!DOCTYPE html>");<br>
+          client.println("<h1>Hello World!</h1>"); <br>
+          client.println("<br>");<br>
+          delay(10);<br>
+        }<br>
+<p>
+   Response는 위에 서술한대로 작성했고<br>
+빈줄을 삽입한 뒤 아주간단한 html코드로 큰글자로 Hello world를 출력하도록 했습니다.<br>
+주석 참고 바랍니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmgnKX%2FbtrqNzjU8Jt%2FC4IgKzEawDc8BwnavPvHkk%2Fimg.png"><br>
+목표한대로 잘 구현된 모습을 확인할 수 있습니다.<br>
+기본적인 구현법을 익혔으니 이제 HTML 코드를 사용하여 센서값을 출력하거나<br>
+버튼으로 LED를 조작하거나 하는 기능을 구현할 수 있습니다.<br>
     </div>
 </div>
 
