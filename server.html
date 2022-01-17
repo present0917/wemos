@@ -50,7 +50,31 @@
         <li><a href="led.html">html 웹서버 구현 LED 동작</a></li> 
     </ul>
     <div>
-    aaa
+        아래 링크들을 참고하여 공부하고 작성했습니다.<br>
+        <a href="https://turtleshell.kr/58">https://turtleshell.kr/58</a><br>
+        <a href="https://kwanulee.github.io/iot/docs/internet/web_arduino.html">https://kwanulee.github.io/iot/docs/internet/web_arduino.html</a><br>
+        <br>이번에는 와이파이에 연결된 Wemos D1 보드를 웹 서버처럼 사용하여<br>
+HTTP를 통해 웹브라우저의 버튼을 누르는 것으로 보드에 연결된 LED를 조작하는 기능을 수행해보겠습니다.<br>
+후술될 내용에서 브라우저는 저희가 접속한 인터넷 브라우저고 서버는 Wemos D1 보드입니다.<br><br>
+브라우저는 서버와 접속되면 Request , Header, Empty line, Body 항목들을 요청합니다.(Request)<br>
+요구받은 서버는 Status line, header, Empty line, Body로 구성된 답을 줍니다.(Response)<br>
+우리는 Wemos D1을 서버로 사용하므로 브라우저로 페이지에 접속했을 때를 위해<br>
+아두이노 IDE를 통해 서버 Response를 작성해 주어야 합니다.<br><p></p>
+우선 Status Line은 반드시 첫줄에 와야 합니다. 3가지 필드로 구성되어 있는데<br>
+HTTP/1.1 200 OK<br>
+위 한 줄을 해석하면<br>
+HTTP/1.1 : 응답 프로토콜과 버전<br>
+200 : 응답 코드<br>
+OK: 응답 메시지를 의미합니다.<br><p></p>
+그다음 header를 적어줍니다.<br>
+Content-type:text/html<br>
+헤더가 끝나고 이어지는 content가 어떤 타입인지 알게 해야 하고 우리는 텍스트로 이루어진 html을 사용합니다.<br>
+Connection:close<br>
+전송이 끝나면 연결을 끊습니다.<br>
+Refresh: 20<br>
+매 20초마다 새로고침합니다.<br><p></p>
+여기까지 Status line과 header를 구성했으므로 뒤에 빈줄을 삽입함으로 구분합니다.<br>
+이제부터 Body를 작성하면 되고 이부분은 평소 HTML로 웹사이트를 만들던것과 같이 작성하면 됩니다.<br>
     </div>
 </div>
 
