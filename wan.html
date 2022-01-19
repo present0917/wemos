@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+    <head>
+        <title>LED 서버</title>
+        <meta charset="utf-8">
+        <style>
+            body{
+                margin:0;
+            }
+            a{
+                color:blue;
+            }
+            h1{
+                font-size:xx-large;
+                text-align:center;
+                border-bottom:2px black solid;
+                margin:0;
+                padding:10px;
+            }
+            ul
+            {
+                margin:0;
+                border-right: double black 2px;
+                width:230px;
+              
+            }
+            .active
+            {
+                color:black;
+            }
+            #grid
+            {
+                display:grid;
+                grid-template-columns: 290px 1fr;
+                padding-top:0;
+            }
+            
+        </style>
+
+    </head>
+
+<body>
+    <h1>Wemos D1 아두이노 와이파이 보드 사용법</h1>
+<div id="grid">
+    <ul>
+        <div style="color:green">by-present0917</div>
+        <li><a href="index.html">Wemos D1 작동테스트</a></li>  
+        <li><a href="server.html">아두이노를 서버로 사용하기</a></li> 
+        <li><a href="led.html">html 웹서버 구현 LED 동작</a></li> 
+        <li><a href="wan.html" class="active">외부망에서도 접속해서 사용하기</a></li> 
+        <li><a href="api.html">ThingSpeak api 사용 IoT 구현</a></li>
+        <li><a href="2017.html">2017 Archive</a></li>
+    </ul>
+    <div>
+        지금까지 우리가 구현한 기능들은 내부망에서만 접속이 가능했습니다.<br>
+그래서 우리가 업로드를 하는데 사용한 PC나 같은 와이파이에 연결된 핸드폰 정도로만 접속이 가능했죠.<br>
+이래서는 웹에 구현을 한 큰 의미가 없습니다.<br>
+이번에는 공유기 포트포워딩을 통해 외부망에서도 접속할 수 있도록 구현해보겠습니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fk5GDk%2Fbtrq4uve5j2%2FZ5FkKcIbHjK9EbrXSey2w1%2Fimg.png"><p>
+    주소창에 192.168.0.1 을 입력해 공유기 페이지로 간 뒤 로그인해줍니다<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdeX2y6%2Fbtrq4x0aYwu%2FQJEV0dK7rNoMG9LmUAqpmk%2Fimg.png"><p>
+        고급설정 -> NAT/라우터 관리 -> 포트포워드 설정으로 이동합니다.<br>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbHGoSp%2Fbtrq6Lcpi9X%2FSPkc9yNl6AdNR5MsXk2nwk%2Fimg.png"><p>
+            이름과 외부포트는 원하는대로 적어주시고 내부포트는 80<br>
+내부 IP주소는 시리얼 모니터에 떠서 URL로 입력했던 그 내부망 주소를 적어주신뒤 저장해주시면 됩니다.<br>
+추가하신 후 우상단에 저장 버튼을 눌러주세요.<p>
+    ※포트포워딩<br>
+포드포워딩은 공유기에 외부로부터의 요청이 올 경우 설정해둔 웹 서버로 연결해주는 기능입니다.<br>
+외부망에서 내 공유기의 외부 IP주소가 등록된 도메인+외부포트 번호를 주소창에 쳐서 연결하려고 하면<br>
+ddns서비스가 도메인을 ip로 변환해준 뒤 그 ip를 사용중인 공유기를 찾아내고<br>
+요청을 그 ip에 해당하는 공유기(우리가 사용하고 있는 공유기)가 받습니다.<br>
+공유기에서는 이제 포트포워딩에 적혀있는 내용을 체크한 뒤 요청한 그 외부포트에 해당하는<br>
+내부 IP주소를 확인하고 그 내부 IP주소에 해당하는 Wemos D1 보드에 요청을 보냅니다<br>
+그럼 우리 보드에서는 외부망의 요청에 대한 응답으로 HTML을 보내줍니다.<br>
+그래서 아래와 같은 화면을 외부망에서도 확인할 수 있고 LED를 제어할 수 있습니다.<p>
+    아래 캡쳐에서는 아직 도메인이 아닌 외부 IP 주소와 포트번호를 바로 입력했기때문에<br>
+첫단계는 생략된 상태라고 보면 됩니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdNcTxe%2Fbtrq7TVsWAG%2FYSKfvmCC4chI02HTd61Ku1%2Fimg.jpg"><p>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FpHh27%2Fbtrq69RJ3qy%2FCKhskCaG8Vwk0JWey5xGhK%2Fimg.jpg"><p>
+        그후 모바일 데이터(4G, 5G)에 연결된 핸드폰이나 PC방 컴퓨터와 같은 같은 외부 망에 접속된 기기를 통해서<br>
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcUOkqD%2Fbtrq8ITGjdM%2FTVldO8lymiIBvRiu860M10%2Fimg.png"><p>
+            공유기의 요약정보에 있는 외부 IP 주소 + 포트번호를 입력합니다.<br>
+예시)외부 IP주소가 192.1.1.1이고 포트번호를 917로 했다면<br>
+192.1.1.1:917 입력<br>
+하면 위 휴대폰 캡쳐와 같이 연결할 수 있습니다.<p>
+위 캡쳐를 살펴보면 LTE로 연결된 상태임에도 우리가 구현한 웹에 접속했고<br>
+실제로 보드의 LED도 제어할 수 있는 것을 확인할 수 있습니다.<p>
+그런데 이렇게 연결한다면 접속할때마다 긴 IP 주소를 외워야 하고 보안 우려도 됩니다.<br>
+구글과 네이버와 같은 사이트를 접속할 때 처럼 도메인을 통해서 접속하려고 합니다<p>
+    https://www.duckdns.org/<br>
+깃허브 또는 구글로 로그인 해준 뒤 리캡챠를 마쳐주고나면<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FneMR7%2FbtrrbTUIdvZ%2FqxlaFwLxupdsON479ok7V1%2Fimg.png"><p>
+    이런 화면을 볼 수 있습니다.<br>
+    가운데 빈칸에 원하는 도메인을 적어줍니다(중복이 불가능하므로 흔한 단어는 피해줍시다)<br>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FviW4y%2Fbtrq9XJQ6sE%2FaOkfnkogptU1oNhUCw2rLk%2Fimg.png"><p>
+        생성되었습니다.<br>
+이제 도메인.duckdns.org:포트번호 입력하면 접속이 됩니다.<br>
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdzZl2F%2Fbtrq6vA6aBn%2Fv1dbA2RjDPKQTPz1nPsZM1%2Fimg.jpg"><br>
+정상 작동하는지 확인해줍니다.<p>
+이제 기본적인 내용은 끝났습니다.<br>
+릴레이를 이용해서 집밖에서도 집안의 전기기구를 켜고끄거나<br>
+핸드폰으로 취침등을 켜고끄거나<br>
+센서를 설치해둔 곳의 값을 어디서나 모니터링 하는 프로젝트를 구현할 수 있게 됐습니다.<br>
+필요한 용도에 활용하시길 바랍니다.<br>
+</p>
+
+    </div>
+</div>
+
+        <div id="disqus_thread"></div>
+<script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://wemos-1.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/61e18682f7cf527e84d226bc/1fpcfas2q';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
+</body>
+</html>
