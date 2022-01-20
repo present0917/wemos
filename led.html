@@ -93,6 +93,10 @@ a href='/ledon 부분 때문에 하이퍼텍스트를 누를때 URL 뒤에 /ledo
 client.println("Content-Type: text/html"); 에서 다음 줄로 커서를 내린 것 뿐이고<br>
   client.println();를 하나 더 삽입해두어야 header 뒤에 빈 줄이 한줄 생기기 때문입니다.<br>
 위와 같이 코드를 작성 후 실행해보면 앞선 예와 마찬가지로 공유기에 접속 된 뒤 브라우저에 입력할 URL이 나옵니다.<p>
+    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdhlXPc%2FbtrrcOudGaQ%2Fz8kUV76jO8AiEhGeeSkav1%2Fimg.png"><br>
+    LED ON 을 누르고 관리자 도구로 리퀘스트 헤더를 확인했을 때 <br>
+첫줄이<br>
+GET /ledon HTTP/1.1 \r\n 으로 되어 있는 것을 확인할 수 있습니다<br>
     <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FlRPIy%2Fbtrq4wfCfMI%2FkELcK5hNwNUkp0MTzsdT50%2Fimg.png"><br>
     <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FkBtqU%2Fbtrq4pHPuUX%2FKhmuKo7VOUA7BeIQ5YYQ00%2Fimg.jpg"><br>
     <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdfKAGW%2Fbtrq5pN7m92%2FA5gJLjywbBeqmrcphwINeK%2Fimg.png"><br>
